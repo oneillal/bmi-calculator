@@ -3,6 +3,13 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
+variables:
+  # Replace this name with that of the Azure service connection in your DevOps project
+  ConnectedServiceName: 'pyBMI'
+
+  # Replace this name to match the name of the App Service you created earlier
+  WebAppName: 'pyBMI'
+
 trigger:
 - master
 
@@ -23,3 +30,12 @@ steps:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
   displayName: 'Install dependencies'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+    replaceExistingArchive: true
+    verbose: # (no value); this input is optional
