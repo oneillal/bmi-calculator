@@ -32,3 +32,6 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
     replaceExistingArchive: true
     verbose: # (no value); this input is optional
+
+- task: PublishBuildArtifacts@1
+
